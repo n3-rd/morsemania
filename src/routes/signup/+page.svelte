@@ -7,7 +7,7 @@
 	import { Client, Account, ID } from 'appwrite';
 
 	const client = new Client()
-		.setEndpoint('http://localhost/v1') // Set only when using self-hosted solution
+		// .setEndpoint('https://morsemania.onrender.com/') // Set only when using self-hosted solution
 		.setProject('641ce07103bff7c6ce23'); // Your project ID
 
 	const createAccount = () => {
