@@ -7,8 +7,8 @@
 	import { Client, Account, ID } from 'appwrite';
 
 	const client = new Client()
-		.setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) // Set only when using self-hosted solution
-		.setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); // Your project ID
+		.setEndpoint('http://localhost/v1') // Set only when using self-hosted solution
+		.setProject('641ce07103bff7c6ce23'); // Your project ID
 
 	const createAccount = () => {
 		const account = new Account(client);
