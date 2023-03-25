@@ -6,6 +6,8 @@
 	import { Client, Databases, Account } from 'appwrite';
 	import { uid } from 'uid';
 
+	let morseElement;
+
 	const client = new Client()
 		.setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) // Replace with your Appwrite endpoint
 		.setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); // Replace with your Appwrite project ID
@@ -27,6 +29,20 @@
 		);
 
 		return result;
+	};
+
+	const flashGreen = (element) => {
+		element.classList.add('text-green-500');
+		setTimeout(() => {
+			element.classList.remove('text-green-500');
+		}, 100);
+	};
+
+	const flashRed = (element) => {
+		element.classList.add('text-red-500');
+		setTimeout(() => {
+			element.classList.remove('text-red-500');
+		}, 100);
 	};
 
 	import SoundIcon from '../../lib/soundIcon.svelte';
@@ -131,7 +147,8 @@
 
 		if (guess === morseCode) {
 			// Check if the guess is correct
-			alert('Correct!');
+			flashGreen(morseElement);
+
 			score++;
 			isPlaying = false;
 			Howler.stop();
@@ -140,7 +157,7 @@
 			timer = 0;
 			startGame();
 		} else {
-			alert('Incorrect. Try again.');
+			flashRed(morseElement);
 			score = 0;
 			guess = '';
 			Howler.stop();
@@ -165,7 +182,7 @@
 	<div class="h-[90vh] flex justify-center items-center">
 		<div class="w-full flex justify-center items-center flex-col">
 			<div class="py-6">
-				<div class="block text-[3rem] font-bold">
+				<div class="block text-[3rem] font-bold" bind:this={morseElement}>
 					{morseCodeSymbols}
 				</div>
 			</div>
