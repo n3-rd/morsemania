@@ -30,7 +30,8 @@
 	};
 
 	import SoundIcon from '../../lib/soundIcon.svelte';
-	import LeaderBoard from '../../lib/leaderBoard.svelte';
+	import LeaderBoard from '../../lib/leaderBoardIcon.svelte';
+	import LeaderBoardIcon from '../../lib/leaderBoardIcon.svelte';
 
 	const codeToAudio = {
 		'.': '/sound/morse-dot.wav',
@@ -199,6 +200,6 @@
 		<SoundIcon />
 	</div>
 	<div class="absolute bottom-2 right-4">
-		<LeaderBoard />
+		<LeaderBoardIcon />
 	</div>
 </div>
