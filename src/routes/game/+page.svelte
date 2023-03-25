@@ -178,22 +178,29 @@
 					class="text-[#10100E] px-4 py-2 rounded-lg font-semibold"
 					bind:value={guess}
 					on:input={() => (guess = guess.toUpperCase())}
+					on:keydown={(event) => {
+						if (event.key === 'Enter') {
+							submitGuess();
+						}
+					}}
 				/>
 			</div>
-			<button
-				type="button"
-				on:click={startGame}
-				class="my-6 bg-white inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-[#10100E] transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
-			>
-				Start
-			</button>
-			<button
-				type="button"
-				on:click={submitGuess}
-				class="my-6 bg-white inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-[#10100E] transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
-			>
-				Submit
-			</button>
+			<div>
+				<button
+					type="button"
+					on:click={startGame}
+					class="my-6 bg-white inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-[#10100E] transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
+				>
+					Start
+				</button>
+				<button
+					type="button"
+					on:click={submitGuess}
+					class="my-6 bg-white inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-[#10100E] transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
+				>
+					Submit
+				</button>
+			</div>
 		</div>
 	</div>
 	<div class="absolute bottom-2 left-4">
