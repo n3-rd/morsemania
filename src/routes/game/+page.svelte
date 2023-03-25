@@ -44,6 +44,8 @@
 	let morseCodeSymbols = '';
 	let guess = '';
 	let isPlaying = false;
+	let timer = 20;
+	let intervalId;
 
 	const codes = [
 		{ text: 'PROGRAM', code: '.--. .-. --- --. .-. --- --. .-.. .' },
@@ -59,12 +61,29 @@
 		return codes[index];
 	};
 
+	const startTimer = () => {
+		clearInterval(intervalId);
+		timer = 20;
+		intervalId = setInterval(() => {
+			timer--;
+			if (timer === 0) {
+				clearInterval(intervalId);
+				alert('Game Over!');
+				isPlaying = false;
+				guess = '';
+				morseCodeSymbols = '';
+			}
+		}, 1000);
+	};
+
 	const startGame = () => {
 		const code = getRandomCode();
 		morseCode = code.text;
 		morseCodeSymbols = code.code;
 		playMorseCode(morseCodeSymbols);
 		isPlaying = true;
+		timer = 0;
+		startTimer();
 	};
 
 	const submitGuess = () => {
@@ -81,10 +100,15 @@
 			// Check if the guess is correct
 			alert('Correct!');
 			isPlaying = false;
+			Howler.stop();
 			guess = '';
 			morseCodeSymbols = '';
+			timer = 0;
+			startGame();
 		} else {
 			alert('Incorrect. Try again.');
+			guess = '';
+			Howler.stop();
 		}
 	};
 
@@ -100,12 +124,41 @@
 	};
 </script>
 
-<h1>Guess the Morse Code</h1>
-<button class="logout" on:click={logout}>Logout</button>
-<div>
-	<p>Morse Code: {morseCodeSymbols}</p>
-	<p>Guess: {guess}</p>
-	<input bind:value={guess} on:input={() => (guess = guess.toUpperCase())} />
-	<button on:click={startGame}>Start</button>
-	<button on:click={submitGuess}>Submit</button>
+<div class="h-screen w-screen bg-[#10100E] text-white overflow-hidden">
+	<h1 class="font-black text-[3rem] text-center">Guess the Morse Code</h1>
+	<button class="logout" on:click={logout}>Logout</button>
+	<div class="h-[90vh] flex justify-center items-center">
+		<div class="w-full flex justify-center items-center flex-col">
+			<div class="py-6">
+				<div class="block text-[3rem] font-bold">
+					{morseCodeSymbols}
+				</div>
+			</div>
+			<div>
+				<p class="my-4 font-bold text-xl">Time left: {timer}s</p>
+			</div>
+			<p class="py-6">Guess: {guess}</p>
+			<div>
+				<input
+					class="text-[#10100E] px-4 py-2 rounded-lg font-semibold"
+					bind:value={guess}
+					on:input={() => (guess = guess.toUpperCase())}
+				/>
+			</div>
+			<button
+				type="button"
+				on:click={startGame}
+				class="my-6 bg-white inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-[#10100E] transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
+			>
+				Start
+			</button>
+			<button
+				type="button"
+				on:click={submitGuess}
+				class="my-6 bg-white inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-[#10100E] transition duration-150 ease-in-out hover:bg-primary-600 focus:bg-primary-600 focus:outline-none focus:ring-0 active:bg-primary-700"
+			>
+				Submit
+			</button>
+		</div>
+	</div>
 </div>
