@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 	import { Client, Databases, Account } from 'appwrite';
 	import { uid } from 'uid';
+	import codes from '../../lib/morseDictionary';
 
 	let morseElement;
 
@@ -92,15 +93,6 @@
 	let timer = 20;
 	let intervalId;
 	let score = 0;
-
-	const codes = [
-		{ text: 'PROGRAM', code: '.--. .-. --- --. .-. --- --. .-.. .' },
-		{ text: 'SVELTE', code: '... ...- .-.. - .-' },
-		{
-			text: 'JAVASCRIPT',
-			code: '.--- .- ...- .- ...-.- -.-- .--. ..- --. ....- .. - -.-. .-.. .. -.-. -.--'
-		}
-	];
 
 	const getRandomCode = () => {
 		const index = Math.floor(Math.random() * codes.length);
