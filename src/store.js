@@ -1,6 +1,7 @@
 import { sdk } from './appwrite';
 import { writable } from 'svelte/store';
 
+
 const createState = () => {
     const { subscribe, set, update } = writable({
         account: null,
@@ -11,6 +12,9 @@ const createState = () => {
         subscribe,
         signup: async (email, password, name) => {
             return await sdk.account.create('unique()', email, password, name);
+        },
+        user: async () => {
+            return await sdk.account.get();
         },
         login: async (email, password) => {
             await sdk.account.createEmailSession(email, password);

@@ -3,6 +3,34 @@
 	import { state } from '../../store';
 	import { Howl, Howler } from 'howler';
 	import { onMount } from 'svelte';
+	import { Client, Databases, Account } from 'appwrite';
+	import { uid } from 'uid';
+
+	const client = new Client()
+		.setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) // Replace with your Appwrite endpoint
+		.setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); // Replace with your Appwrite project ID
+
+	const addPoints = async (points) => {
+		const database = new Databases(client);
+		const account = new Account(client);
+		const user = await account.get();
+
+		const result = await database.createDocument(
+			import.meta.env.VITE_SCORE_DATABASE_ID, // Replace with your Appwrite database ID
+			import.meta.env.VITE_SCORE_COLLECTION_ID, // Replace with your Appwrite collection ID
+			uid(20),
+			{
+				username: user.name,
+				score: points,
+				timestamp: new Date(Date.now()).toISOString()
+			}
+		);
+
+		return result;
+	};
+
+	import SoundIcon from '../../lib/soundIcon.svelte';
+	import LeaderBoard from '../../lib/leaderBoard.svelte';
 
 	const codeToAudio = {
 		'.': '/sound/morse-dot.wav',
@@ -46,6 +74,7 @@
 	let isPlaying = false;
 	let timer = 20;
 	let intervalId;
+	let score = 0;
 
 	const codes = [
 		{ text: 'PROGRAM', code: '.--. .-. --- --. .-. --- --. .-.. .' },
@@ -69,6 +98,7 @@
 			if (timer === 0) {
 				clearInterval(intervalId);
 				alert('Game Over!');
+				addPoints(score);
 				isPlaying = false;
 				guess = '';
 				morseCodeSymbols = '';
@@ -99,6 +129,7 @@
 		if (guess === morseCode) {
 			// Check if the guess is correct
 			alert('Correct!');
+			score++;
 			isPlaying = false;
 			Howler.stop();
 			guess = '';
@@ -107,6 +138,7 @@
 			startGame();
 		} else {
 			alert('Incorrect. Try again.');
+			score = 0;
 			guess = '';
 			Howler.stop();
 		}
@@ -160,5 +192,11 @@
 				Submit
 			</button>
 		</div>
+	</div>
+	<div class="absolute bottom-2 left-4">
+		<SoundIcon />
+	</div>
+	<div class="absolute bottom-2 right-4">
+		<LeaderBoard />
 	</div>
 </div>

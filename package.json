@@ -28,6 +28,7 @@
 	"type": "module",
 	"dependencies": {
 		"appwrite": "^10.2.0",
-		"howler": "^2.2.3"
+		"howler": "^2.2.3",
+		"uid": "^2.0.1"
 	}
 }
