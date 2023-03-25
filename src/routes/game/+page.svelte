@@ -98,7 +98,9 @@
 			if (timer === 0) {
 				clearInterval(intervalId);
 				alert('Game Over!');
-				addPoints(score);
+				if (score > 0) {
+					addPoints(score);
+				}
 				isPlaying = false;
 				guess = '';
 				morseCodeSymbols = '';
