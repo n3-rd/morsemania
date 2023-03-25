@@ -1,27 +1,32 @@
 <!-- simple signup form -->
 <script>
-	let email;
-	let password;
-	let name;
+	import { goto } from '$app/navigation';
+	import { state } from '../../store';
 
-	import { Client, Account, ID } from 'appwrite';
+	let email = '';
+	let name = '';
+	let password = '';
+	let confirmPassword = '';
+	let error = null;
 
-	const client = new Client()
-		.setEndpoint('https://morsemania.onrender.com') // Set only when using self-hosted solution
-		.setProject('641ce07103bff7c6ce23'); // Your project ID
-
-	const createAccount = () => {
-		const account = new Account(client);
-
-		// Register User
-		account.create(ID.unique(), email, password, name).then(
-			(response) => {
-				console.log(response);
-			},
-			(error) => {
-				console.log(error);
-			}
-		);
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		if (password !== confirmPassword) {
+			state.alert({
+				color: 'red',
+				message: 'Passwords do not match'
+			});
+			return;
+		}
+		try {
+			await state.signup(email, password, name);
+			goto('/game');
+		} catch (error) {
+			state.alert({
+				color: 'red',
+				message: error.message
+			});
+		}
 	};
 </script>
 
@@ -32,22 +37,22 @@
 				<img
 					src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
 					class="w-full"
-					alt="Phone image"
+					alt="Phone"
 				/>
 			</div>
 			<div class="md:w-8/12 lg:ml-6 lg:w-5/12">
-				<form on:submit|preventDefault={createAccount}>
+				<form on:submit|preventDefault={handleSubmit}>
 					<!-- name -->
 					<div class="relative mb-6" data-te-input-wrapper-init>
 						<input
 							type="text"
 							class="peer block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-							id="exampleFormControlInput3"
-							placeholder="Email address"
+							id="name"
+							placeholder="Name"
 							bind:value={name}
 						/>
 						<label
-							for="exampleFormControlInput3"
+							for="name"
 							class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
 							>Name
 						</label>
@@ -57,12 +62,12 @@
 						<input
 							type="email"
 							class="peer block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-							id="exampleFormControlInput3"
+							id="email"
 							placeholder="Email address"
 							bind:value={email}
 						/>
 						<label
-							for="exampleFormControlInput3"
+							for="email"
 							class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
 							>Email address
 						</label>
@@ -73,14 +78,30 @@
 						<input
 							type="password"
 							class="peer block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-							id="exampleFormControlInput33"
+							id="password"
 							placeholder="Password"
 							bind:value={password}
 						/>
 						<label
-							for="exampleFormControlInput33"
+							for="password"
 							class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
 							>Password
+						</label>
+					</div>
+
+					<!-- Confirm Password input -->
+					<div class="relative mb-6" data-te-input-wrapper-init>
+						<input
+							type="password"
+							class="peer block min-h-[auto] w-full rounded border-0 bg-transparent py-[0.32rem] px-3 leading-[2.15] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+							id="confirm-password"
+							placeholder="confirm-Password"
+							bind:value={confirmPassword}
+						/>
+						<label
+							for="confirm-password"
+							class="pointer-events-none absolute top-0 left-3 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[1.15rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
+							>Confirm Password
 						</label>
 					</div>
 

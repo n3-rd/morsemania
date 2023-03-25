@@ -1,23 +1,22 @@
 <script>
-	let email;
-	let password;
 	import { goto } from '$app/navigation';
-	import { Client, Account } from 'appwrite';
+	import { state } from '../../store';
 
-	const client = new Client()
-		.setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) // Set only when using self-hosted solution
-		.setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); // Your project ID
+	let email = '';
+	let password = '';
+	let error = null;
 
-	const login = () => {
-		client.account.createSession(email, password).then(
-			(response) => {
-				console.log(response);
-				goto('/game');
-			},
-			(error) => {
-				console.log(error);
-			}
-		);
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		try {
+			await state.login(email, password);
+			goto('/game');
+		} catch (error) {
+			state.alert({
+				color: 'red',
+				message: error.message
+			});
+		}
 	};
 </script>
 
@@ -28,11 +27,11 @@
 				<img
 					src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
 					class="w-full"
-					alt="Phone image"
+					alt="Phone"
 				/>
 			</div>
 			<div class="md:w-8/12 lg:ml-6 lg:w-5/12">
-				<form on:submit|preventDefault={login}>
+				<form on:submit|preventDefault={handleSubmit}>
 					<!-- Email input -->
 					<div class="relative mb-6" data-te-input-wrapper-init>
 						<input
