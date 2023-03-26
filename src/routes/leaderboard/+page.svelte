@@ -8,8 +8,8 @@
 	const databases = new Databases(client);
 
 	let promise = databases.listDocuments(
-		import.meta.env.VITE_SCORE_DATABASE_ID,
-		import.meta.env.VITE_SCORE_COLLECTION_ID,
+		'641f07fadfb274667be2', // Replace with your Appwrite database ID
+		'641f08174117c6dc127b', // Replace with your Appwrite collection ID
 		[Query.orderDesc('score')]
 	);
 

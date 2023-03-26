@@ -19,8 +19,8 @@
 		const user = await account.get();
 
 		const result = await database.createDocument(
-			import.meta.env.VITE_SCORE_DATABASE_ID, // Replace with your Appwrite database ID
-			import.meta.env.VITE_SCORE_COLLECTION_ID, // Replace with your Appwrite collection ID
+			'641f07fadfb274667be2', // Replace with your Appwrite database ID
+			'641f08174117c6dc127b', // Replace with your Appwrite collection ID
 			uid(20),
 			{
 				username: user.name,
