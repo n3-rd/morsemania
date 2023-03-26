@@ -65,14 +65,14 @@
 						Login
 					</button>
 					<!-- Password reset link -->
-					<div class="text-center">
+					<!-- <div class="text-center">
 						<a
 							href="#"
 							class="text-neutral-500 hover:text-primary focus:text-primary focus:outline-none transition-all duration-200 ease-out"
 						>
 							Forgot Password?
 						</a>
-					</div>
+					</div> -->
 				</form>
 			</div>
 		</div>
