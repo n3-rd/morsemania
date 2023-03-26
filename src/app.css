@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 body{
-color: #000;
+color: #fff;
+background-color: #10100E;
 font-family: 'Satoshi', sans-serif;
 }
