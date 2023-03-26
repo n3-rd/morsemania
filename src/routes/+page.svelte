@@ -2,6 +2,15 @@
 	import LoginButton from '../lib/LoginButton.svelte';
 	import PlayButton from '../lib/PlayButton.svelte';
 	import SignUpButton from '../lib/SignUpButton.svelte';
+	import { goto } from '$app/navigation';
+	import { state } from '../store';
+	import { onMount } from 'svelte';
+	let loggedIn = true;
+	onMount(async () => {
+		await state.checkSession().catch(() => {
+			loggedIn = false;
+		});
+	});
 </script>
 
 <div class="min-h-screen w-screen">
@@ -11,8 +20,11 @@
 	</h3>
 
 	<div class="h-full w-full flex justify-center items-center">
-		<PlayButton />
-		<LoginButton />
-		<SignUpButton />
+		{#if loggedIn === true}
+			<PlayButton />
+		{:else}
+			<LoginButton />
+			<SignUpButton />
+		{/if}
 	</div>
 </div>
