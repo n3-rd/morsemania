@@ -27,7 +27,7 @@
 
 <div class="min-h-screen w-screen bg-[#10100E] text-white">
 	<h1 class="text-center font-black text-[3rem]">LeaderBoard</h1>
-	<div class="px-[23rem]">
+	<div class="px-[23vw]">
 		{#each scores as score}
 			<div class="flex flex-row justify-between">
 				<div class="text-center font-black text-[2rem]">{score.username}</div>

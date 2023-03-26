@@ -1,8 +1,8 @@
 import { Client as Appwrite, Databases, Account } from 'appwrite';
 
 const server = {
-    endpoint: import.meta.env.VITE_APPWRITE_ENDPOINT.toString(),
-    project: import.meta.env.VITE_APPWRITE_PROJECT_ID.toString(),
+    endpoint: 'http://localhost/v1',
+    project: '641ce07103bff7c6ce23',
 };
 
 const client = new Appwrite();
