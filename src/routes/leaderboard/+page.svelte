@@ -2,8 +2,8 @@
 	import { Client, Databases, Query } from 'appwrite';
 	let scores = [];
 	const client = new Client()
-		.setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) // Replace with your Appwrite endpoint
-		.setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
+		.setEndpoint('http://localhost/v1') // Replace with your Appwrite endpoint
+		.setProject('641ce07103bff7c6ce23'); // Replace with your Appwrite project ID
 
 	const databases = new Databases(client);
 
