@@ -10,7 +10,7 @@
 	let morseElement;
 
 	const client = new Client()
-		.setEndpoint('http://localhost/v1') // Replace with your Appwrite endpoint
+		.setEndpoint('https://morsemania.up.railway.app/') // Replace with your Appwrite endpoint
 		.setProject('641ce07103bff7c6ce23'); // Replace with your Appwrite project ID
 
 	const addPoints = async (points) => {
@@ -49,6 +49,7 @@
 	import SoundIcon from '../../lib/soundIcon.svelte';
 	import LeaderBoard from '../../lib/leaderBoardIcon.svelte';
 	import LeaderBoardIcon from '../../lib/leaderBoardIcon.svelte';
+	import LogoutButton from '../../lib/LogoutButton.svelte';
 
 	const codeToAudio = {
 		'.': '/sound/morse-dot.wav',
@@ -214,6 +215,7 @@
 	</div>
 	<div class="absolute bottom-2 left-4">
 		<SoundIcon />
+		<LogoutButton />
 	</div>
 	<div class="absolute bottom-2 right-4">
 		<LeaderBoardIcon />

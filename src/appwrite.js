@@ -1,7 +1,7 @@
 import { Client as Appwrite, Databases, Account } from 'appwrite';
 
 const server = {
-    endpoint: 'http://localhost/v1',
+    endpoint: 'https://morsemania.up.railway.app/',
     project: '641ce07103bff7c6ce23',
 };
 
