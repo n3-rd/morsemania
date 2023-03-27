@@ -2,7 +2,7 @@
 	import { Client, Databases, Query } from 'appwrite';
 	let scores = [];
 	const client = new Client()
-		.setEndpoint('https://morsemania.up.railway.app/') // Replace with your Appwrite endpoint
+		.setEndpoint('https://morsemania.up.railway.app') // Replace with your Appwrite endpoint
 		.setProject('641ce07103bff7c6ce23'); // Replace with your Appwrite project ID
 
 	const databases = new Databases(client);
